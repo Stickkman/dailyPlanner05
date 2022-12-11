@@ -8,7 +8,7 @@ var saveButton = $('.saveBtn'); // selector for save button
 
 
 function displayCurrentDate() { // function to populate current date
-    var currentDate = dayjs().format('dddd, MMMM MM, YYYY');
+    var currentDate = dayjs().format('dddd, MMMM D, YYYY');
     headerDateEl.text(currentDate);
 }
 
@@ -31,6 +31,9 @@ function handleSaves(event) {
                     
         console.log("Test targetId: " + targetId + "\nTest targetText: " + targetText); //test hour and textarea pairs
 
+        localStorage.setItem(targetId, targetText); // sets value of targetID as key, and targetText as value in local storage
+
+
     
 
     console.log("Raw Event Data: " + JSON.stringify(event)); // test for content in object
@@ -38,20 +41,52 @@ function handleSaves(event) {
     
 }
 
+function initializeStorage() {  // if null exists initialize key/values to prevent issues
+    if (localStorage.getItem("hour-9") === null) { localStorage.setItem("hour-9", ""); } 
+    if (localStorage.getItem("hour-10") === null) { localStorage.setItem("hour-10", ""); } 
+    if (localStorage.getItem("hour-11") === null) { localStorage.setItem("hour-11", ""); } 
+    if (localStorage.getItem("hour-12") === null) { localStorage.setItem("hour-12", ""); } 
+    if (localStorage.getItem("hour-13") === null) { localStorage.setItem("hour-13", ""); } 
+    if (localStorage.getItem("hour-14") === null) { localStorage.setItem("hour-14", ""); } 
+    if (localStorage.getItem("hour-15") === null) { localStorage.setItem("hour-15", ""); } 
+    if (localStorage.getItem("hour-16") === null) { localStorage.setItem("hour-16", ""); } 
+    if (localStorage.getItem("hour-17") === null) { localStorage.setItem("hour-17", ""); } 
+            // pulls local storage values to populate textarea to keep data when page refreshes
+        var h9 = localStorage.getItem("hour-9"); $('.textarea9').val(h9);
+        var h10 = localStorage.getItem("hour-10"); $('.textarea10').val(h10);
+        var h11 = localStorage.getItem("hour-11"); $('.textarea11').val(h11);
+        var h12 = localStorage.getItem("hour-12"); $('.textarea12').val(h12);
+        var h13 = localStorage.getItem("hour-13"); $('.textarea13').val(h13);
+        var h14 = localStorage.getItem("hour-14"); $('.textarea14').val(h14);
+        var h15 = localStorage.getItem("hour-15"); $('.textarea15').val(h15);
+        var h16 = localStorage.getItem("hour-16"); $('.textarea16').val(h16);
+        var h17 = localStorage.getItem("hour-17"); $('.textarea17').val(h17);
+    
+    
+    
+    
+    
+    // localStorage.setItem("hour-10", "");
+    // localStorage.setItem("hour-11", "");
+    // localStorage.setItem("hour-12", "");
+    // localStorage.setItem("hour-13", "");
+    // localStorage.setItem("hour-14", "");
+    // localStorage.setItem("hour-15", "");
+    // localStorage.setItem("hour-16", "");
+    // localStorage.setItem("hour-17", "");
+}
+
 $(function () {
     
+    initializeStorage(); // 
+
+
     displayCurrentDate(); // run function to display current date to screen on page load
 
   
 
-    // TODO: Add a listener for click events on the save button. This code should
-    // use the id in the containing time-block as a key to save the user input in
-    // local storage. HINT: What does `this` reference in the click listener
-    // function? How can DOM traversal be used to get the "hour-x" id of the
-    // time-block containing the button that was clicked? How might the id be
-    // useful when saving the description in local storage?
-
-        // saveButton.on('click', handleSaves)
+   
+       
 
         $('.time-block').on('click', '.saveBtn', handleSaves); // listener for save buttons
     //
