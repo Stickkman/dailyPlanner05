@@ -7,6 +7,12 @@ var headerDateEl = $('#currentDay'); // variable to select element to populate c
 var saveButton = $('.saveBtn'); // selector for save button
 
 
+
+
+
+
+
+
 function displayCurrentDate() { // function to populate current date
     var currentDate = dayjs().format('dddd, MMMM D, YYYY');
     headerDateEl.text(currentDate);
@@ -63,28 +69,41 @@ function initializeStorage() {  // if null exists initialize key/values to preve
         var h17 = localStorage.getItem("hour-17"); $('.textarea17').val(h17);
     
     
-    
-    
-    
-    // localStorage.setItem("hour-10", "");
-    // localStorage.setItem("hour-11", "");
-    // localStorage.setItem("hour-12", "");
-    // localStorage.setItem("hour-13", "");
-    // localStorage.setItem("hour-14", "");
-    // localStorage.setItem("hour-15", "");
-    // localStorage.setItem("hour-16", "");
-    // localStorage.setItem("hour-17", "");
+  
+}
+
+
+
+function timeColors() {
+	
+	var currentHour = dayjs().format('H'); // get the current hour specifically
+	
+		for (i = 0; i < 9; i++) 
+		{ 	
+			var idText2 = document.querySelectorAll(".time-block"); //selects all timeblock classes
+			var idText = $(".time-block")[i].id; // selects all timeblock ids 
+			var idHour = idText.match(/\d+/g); // converts idText from above to s number for conditional statements
+			console.log("id text: " + idText + " id Hour: " + idHour + " current hour: " + currentHour); // test for number conversion pair
+			var setAt = idText; console.log(setAt); 
+			
+				// checks current hour vs the hour of the timeblock to add appropriate color
+			if (idHour < currentHour) { idText2[i].classList.add('past'); }
+			if (idHour == currentHour) { idText2[i].classList.add('present'); }
+			if (idHour > currentHour) { idText2[i].classList.add('future'); }
+			console.log("idText2: " + JSON.stringify(idText2)); //test
+		}  
+
 }
 
 $(function () {
     
     initializeStorage(); // 
-
-
+	
+		
     displayCurrentDate(); // run function to display current date to screen on page load
 
   
-
+	timeColors(); // run function to apply colors to time blocks based on past, present, and future
    
        
 
