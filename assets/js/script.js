@@ -1,23 +1,15 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
+//javascript code - nothing is started until the page is fully loaded
 
 var headerDateEl = $('#currentDay'); // variable to select element to populate current date
-
 var saveButton = $('.saveBtn'); // selector for save button
-
 var displaySave = document.getElementById('saveNote'); // selector for hidden/visible text save toggle
-
-
-
 
 function displayCurrentDate() { // function to populate current date
     var currentDate = dayjs().format('dddd, MMMM D, YYYY');
     headerDateEl.text(currentDate);
 }
 
-
-function handleSaves(event) {
+function handleSaves(event) {  // function to handle save events
     
     console.log("handleSaves function started"); // test function start
     var targetId= event.delegateTarget.id; // variable for time-block #id
@@ -33,7 +25,7 @@ function handleSaves(event) {
         if (targetId == "hour-16") { var targetText = $('.textarea16').val(); } 
         if (targetId == "hour-17") { var targetText = $('.textarea17').val(); } 
                     
-        console.log("Test targetId: " + targetId + "\nTest targetText: " + targetText); //test hour and textarea pairs
+            console.log("Test targetId: " + targetId + "\nTest targetText: " + targetText); //test hour and textarea pairs
 
         localStorage.setItem(targetId, targetText); // sets value of targetID as key, and targetText as value in local storage
 
@@ -42,11 +34,9 @@ function handleSaves(event) {
                 setTimeout(() => {                  // timeout for 1 second while displaying save message
                     displaySave.classList.add('d-none'); // sets back to hidden after timeout
                      }, 1000)
-    
-
-    console.log("Raw Event Data: " + JSON.stringify(event)); // test for content in object
-
-    
+  
+                console.log("Raw Event Data: " + JSON.stringify(event)); // test for content in object
+  
 }
 
 function initializeStorage() {  // if null exists initialize key/values to prevent issues
@@ -69,16 +59,11 @@ function initializeStorage() {  // if null exists initialize key/values to preve
         var h15 = localStorage.getItem("hour-15"); $('.textarea15').val(h15);
         var h16 = localStorage.getItem("hour-16"); $('.textarea16').val(h16);
         var h17 = localStorage.getItem("hour-17"); $('.textarea17').val(h17);
-    
-    
-  
 }
 
-
-
-function timeColors() {
+function timeColors() { // function to set color of text blocks based on hour
 	
-	var currentHour = dayjs().format('H'); // get the current hour specifically
+	var currentHour = dayjs().format('H'); // get the current hour only
 	
 		for (i = 0; i < 9; i++) 
 		{ 	
@@ -94,33 +79,16 @@ function timeColors() {
 			if (idHour > currentHour) { idText2[i].classList.add('future'); }
 			console.log("idText2: " + JSON.stringify(idText2)); //test
 		}  
-
 }
 
-$(function () {
+$(function () { // waits for page to load before any code is executed
     
-    initializeStorage(); // 
-	
-		
-    displayCurrentDate(); // run function to display current date to screen on page load
-
+    initializeStorage(); // call function to initialize local storage keys 
+			
+        displayCurrentDate(); // call function to display current date to screen on page load
   
-	timeColors(); // run function to apply colors to time blocks based on past, present, and future
-   
-       
+	        timeColors(); // run function to apply colors to time blocks based on past, present, and future
+    
+        $('.time-block').on('click', '.saveBtn', handleSaves); // listener for save buttons that calls handleSaves function when clicked
 
-        $('.time-block').on('click', '.saveBtn', handleSaves); // listener for save buttons
-    //
-    // TODO: Add code to apply the past, present, or future class to each time
-    // block by comparing the id to the current hour. HINTS: How can the id
-    // attribute of each time-block be used to conditionally add or remove the
-    // past, present, and future classes? How can Day.js be used to get the
-    // current hour in 24-hour time?
-
-    //
-    // TODO: Add code to get any user input that was saved in localStorage and set
-    // the values of the corresponding textarea elements. HINT: How can the id
-    // attribute of each time-block be used to do this?
-    //
-    // TODO: Add code to display the current date in the header of the page.
   });
