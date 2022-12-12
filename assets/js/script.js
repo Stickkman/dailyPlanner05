@@ -6,9 +6,7 @@ var headerDateEl = $('#currentDay'); // variable to select element to populate c
 
 var saveButton = $('.saveBtn'); // selector for save button
 
-
-
-
+var displaySave = document.getElementById('saveNote'); // selector for hidden/visible text save toggle
 
 
 
@@ -39,7 +37,11 @@ function handleSaves(event) {
 
         localStorage.setItem(targetId, targetText); // sets value of targetID as key, and targetText as value in local storage
 
-
+            displaySave.classList.remove('d-none'); // removes hidden class value
+             displaySave.classList.add('d-block');  // adds visible class value to reveal saved message
+                setTimeout(() => {                  // timeout for 1 second while displaying save message
+                    displaySave.classList.add('d-none'); // sets back to hidden after timeout
+                     }, 1000)
     
 
     console.log("Raw Event Data: " + JSON.stringify(event)); // test for content in object
